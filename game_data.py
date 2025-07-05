@@ -10,9 +10,12 @@ rooms = {
             "cold and damp with the smell of rot and old metal. As you try to get your bearings, you "
             "hear the creak of floorboards above you."
         ),
+        "reentry": (
+            "The chill greets you again as you return to the basement. Nothing *seems* to have moved...right?"
+        ),
         "exits": {"north": "storage_room", "west": "stairwell"},
         "items": ["crowbar"],
-        "locked": True  # Requires crowbar for storage room door
+        "locked": False
     },
 
     "storage_room": {
@@ -24,9 +27,14 @@ rooms = {
             "pile of clutter, which starts making noise that could possibly be heard. The air feels "
             "oppressive, and the padlocked door seems to move slightly... or maybe it's your imagination?"
         ),
+        "reentry": (
+            "The musty air in the storage room hasn't changed, but...there's a scratching noise "
+            "definitely coming from behind that locked crawlspace."
+        ),
         "exits": {"south": "basement"},
-        "items": ["rusty key"],
-        "locked": False
+        "items": ["rusty_key"],
+        "locked": True # Requires crowbar for storage room door
+
     },
 
     "stairwell": {
@@ -36,9 +44,12 @@ rooms = {
             "top of the stairs shows the silhouette of a wooden door. Where this door may lead to is "
             "anyone's guess, but it seems to be the only way forward."
         ),
+        "reentry": (
+            "The narrow stairway yawns downward like a hungry throat. You descend slowly, listening..."
+        ),
         "exits": {"up": "kitchen", "down": "basement"},
         "items": [],
-        "locked": True  # Requires rusty key
+        "locked": False
     },
     
     "kitchen": {
@@ -47,34 +58,42 @@ rooms = {
             "doors either standing wide open or, in some cases, hanging from broken hinges or missing "
             "entirely. A fine layer of dust seems to cover everything there...everything except a large "
             "kitchen knife lying on the counter on top of reddish stains that you hope are from spilled "
-            "wine. You see wan sunlight streaming in from the dusty windows above the dirty sink, which "
-            "is full of old dented pots. A single trail of large footprints on the kitchen floor leads "
-            "away from the basement door towards the counter and then off to the south into an adjoining "
+            "wine. You see wan sunlight streaming in from the dirty windows above the kitchen sink, which "
+            "is full of old, dented pots festooned with mold. A single trail of large footprints on the kitchen floor"
+            "leads away from the basement door towards the counter and then off to the south into an adjoining "
             "room..."
         ),
+        "reentry": (
+            "The kitchen is silent once more. That knife stain looks suspiciously fresh. Are those more footprints "
+            "moving towards the basement door? Or are they yours?"
+        ),
         "exits": {"south": "dining_room"},
-        "items": ["kitchen knife"],
-        "locked": False
+        "items": ["kitchen_knife"],
+        "locked": True # Requires rusty key
     },
 
     "dining_room": {
         "description": (
             "The dining room is a strange scene: the table is set and plates are covered with food which "
-            "seem to be infested with what looks like maggots. Ornate crystal goblets sit, dusty and "
+            "seem to be infested with creatures that look like maggots. Ornate crystal goblets sit, dusty and "
             "untouched, containing a type of red liquid which is layered with some kind of...fungus? "
             "The blue curtains on the windows are tattered and torn, and fading sunlight streams in on "
-            "the table, shining almost like spotlights to hightlight the disturbing state of the meal "
+            "the table, shining almost like spotlights to highlight the disturbing state of the meal "
             "and causing you to shudder in revulsion. Two of the dining room chairs are overturned and "
-            "there are more of those reddish stains under the layer dust on the floor near them. The "
+            "there are more of those reddish stains under the layer of dust on the floor near them. The "
             "ghostly line of footprints leading here from the kitchen ends and disappears near the "
             "table.  An arched opening leads out of the ghastly dining area and you can vaguely see a "
             "large door that might open to the outside world and hopefully, safety. You can faintly hear "
             "the creaking of more floorboards coming from somewhere above on another floor of the house."
         ),
+        "reentry": (
+            "Back in the dining room, the rotting meal still festers under the dying rays of the fading sun. The "
+            "shadows are growing longer..."
+        ),
         "exits": {"south": "foyer", "north": "kitchen"},
         "items": [],
         "locked": False
-    }
+    },
 
     "foyer": {
         "description": (
@@ -86,9 +105,14 @@ rooms = {
             "another stairwell that rises into the shadows. Moving slowly and carefully to avoid making "
             "noise, you approach the large double doors and through the stained glass windows you can "
             "see trees blowing in the wind being illuminated by the fading sunlight as nightfall "
-            "approaches. This is definitely the way out! With excitement, you grab the ornate door 
-            handle, freedom only moments away...but it's locked tight."
+            "approaches. This is definitely the way out! With excitement, you grab the ornate door " 
+            "handle, freedom only moments away...but it's locked tight."
         ),
+        "reentry": (
+            "You step back into the foyer. The lengthening shadows make the shredded furniture look like teeth. "
+            "You hear shuffling footsteps at the top of the stairs. Someone - or *something* - is beginning to plod "
+            "heavily down towards you."
+            ),
         "exits": {
             "north": "dining_room",
             "south": "study",
@@ -97,8 +121,8 @@ rooms = {
             "up": "stairwell"
             },
         "items": [],
-        "locked": True
-    }
+        "locked": False
+    },
 
     "study": {
         "description": (
@@ -110,12 +134,16 @@ rooms = {
             "far wall. The sunlight seems to have faded even more as you survey the room and the shadows "
             "looming in the corners deepen into darkness, giving the study a sinister look. You hear "
             "faint movement above you, as someone, or something, moves through the unseen rooms on the "
-            "upper floors. Where can that front door key be??"
+            "upper floors. If only you can find the key to the front door..."
+        ),
+        "reentry": (
+            "Back in the study, the books seem almost to stare at you accusingly, as if you're the cause of "
+            "everything that's wrong here."
         ),
         "exits": {"north": "foyer"},
         "items": [],
         "locked": False
-    }
+    },
     
     "outside": {
         "description": (
@@ -129,17 +157,15 @@ rooms = {
             "the tops of the trees as the sun finally dips below the horizon behind the imposing house, "
             "and night falls. The oppressive weight you've carried through the house begins to lift. You "
             "made it. *You're safe*.\n\n"
-            "You take that last step towards safety and freedom-\n\n"
-            "-and a cold hand clamps down on your shoulder from behind.\n\n"
-            "The cold sinks in as you're dragged backwards...\n\n"
-            "Your last coherent thought is lost in the void as your mind goes blank...\n\n"
-            "You never even hear the doors close behind you.\n\n"
-            "*END*"
+        ),
+        "reentry": (
+            "Stepping back outside, something feels different. A sense of...wrongness...fills the air. Freedom "
+            "isn't here...not yet."
         ),
         "exits": {},
         "items": [],
-        "locked": False
-    }
+        "locked": True
+    },
 }
             
 

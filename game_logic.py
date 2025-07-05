@@ -1,4 +1,6 @@
 from game_data import rooms
+from item_data import item_descriptions
+
 
 def use_item(item, current_room, inventory):
     if item == "crowbar" and current_room == "basement":
@@ -29,21 +31,21 @@ def use_item(item, current_room, inventory):
             if rooms["storage_room"]["locked"]:
                 rooms["storage_room"]["locked"] = False
                 print(
-                    "You wedge the crowbar between the padlocked door and the frame. With effort, "
+                        "You wedge the crowbar between the padlocked door and the frame. With effort, "
                     "the hasp of the lock gives way and the door creaks open quietly, revealing "
                     "what seems to be a cluttered storage room."
                 )
                 return "unlocked_storage"
 
             else:
-                print("the storage room is already open.")
+                print("The storage room is already open.")
                 return
 
         else:
             print("You can only use the crowbar on the doors to the north and the west.")
             return
 
-    elif item == "kitchen knife" and current_room == "study":
+    elif item == "kitchen_knife" and current_room == "study":
         if "front_door_key" in inventory or "front_door_key" in rooms["study"]["items"]:
             print("The drawer is already pried open, and the key is visible.")
             return
@@ -61,11 +63,84 @@ def use_item(item, current_room, inventory):
         inventory.append("front_door_key")
 
         # Remove knife from inventory
-        inventory.remove("kitchen knife")
+        inventory.remove("kitchen_knife")
 
         return "drawer_opened"
 
-              
+    elif item == "rusty_key" and current_room == "stairwell":
+        if rooms["kitchen"]["locked"]:
+            rooms["kitchen"]["locked"] = False
+            print("You slide the rusty key into the old lock with some effort. You turn the key, and "
+                  "for a heart-stopping moment the key doesn't turn. Holding your breath, you turn it "
+                  "harder, praying that it won't break. Finally, with a reluctant *CLICK*, it turns and "
+                  "the door slowly creaks inwards and leads you into the kitchen area. Looking around "
+                  "fearfully, you attempt to remove the key from the lock but the rust holds it fast."
+            )
+
+            inventory.remove("rusty_key")
+
+            return "kitchen_unlocked"
+
+        else:
+            print("The stairwell door is already unlocked.")
+            return
+
+    elif item == "front_door_key" and current_room == "foyer":
+        if rooms["outside"]["locked"]:
+            rooms["outside"]["locked"] = False
+            print("You fit the large brass key into the ornate lock. It rotates smoothly and turns with "
+                  "a heavy *CLUNK*.\n"
+                  "The double doors swing open slightly. Finally! The way out!!"
+            )
+            return "door_unlocked"
+
+        else:
+            print("The door is already unlocked.")
+            return
+
+    else:
+        print("You can't use that here.")
+        return
+
+
+
+
+def handle_inventory_command(command, current_room, inventory, rooms):
+    words = command.strip().lower().split()
+
+    if command in ["inventory", "i"]:
+        if not inventory:
+            print("You are not carrying anything.")
+        else:
+            print("You're carrying: ")
+            for item in inventory:
+                print(f" - {item.replace('_', ' ')}")
+        return
+
+    if words[0] == "take" and len(words) > 1:
+        item = '_'.join(words[1:])
+        if item in rooms[current_room]["items"]:
+            inventory.append(item)
+            rooms[current_room]["items"].remove(item)
+
+            # Print the item and the item description, if available
+            print(f"You pick up the {item.replace('_', ' ')}. {item_descriptions[item]}")
+            
+        else:
+            print(f"There is no {item.replace('_', ' ')} here to take.")
+        return
+
+    if words[0] == "drop" and len(words) > 1:
+        item = ('_').join(words[1:])
+        if item in inventory:
+            inventory.remove(item)
+            rooms[current_room]["items"].append(item)
+            print(f"You drop the {item.replace('_', ' ')}.")
+        else:
+            print(f"You're not carrying a {item.replace('_', ' ')}.")
+        return
+
+    print("I don't understand that inventory command.")
 
 
 
@@ -79,8 +154,13 @@ def use_item(item, current_room, inventory):
 
 
 
-                                
 
 
-                              
+
+
+
+
+
+
+
 
